@@ -59,7 +59,7 @@ function showPaymentInfo() {
 
   if (payment === "upi") {
     box.style.display = "block";
-    box.innerHTML = "<b>UPI ID:</b> charantours@upi";
+    box.innerHTML = "<b>UPI ID:</b> charangowda2005@ybl";
   } else {
     box.style.display = "none";
   }

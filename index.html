@@ -7,7 +7,7 @@
   <title>Charan Tours & Travels</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="c.css">
 </head>
 
 <body>
@@ -19,21 +19,112 @@
   </div>
 </nav> -->
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
 
-    <!-- LOGO -->
-    <a class="navbar-brand d-flex align-items-center" href="#">
+    <li class="nav-item">
+    <a class="nav-link" href="login.html">
+        Login
+    </a>
+</li>
+
+    LOGO -->
+    <!-- <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="./WhatsApp Image 2026-06-18 at 11.34.10 PM.jpeg" alt="Logo" width="45" height="45" class="me-2 rounded-circle">
       <span class="fw-bold text-warning">Charan Tours</span>
     </a>
 
-    <!-- MOBILE MENU BUTTON -->
-    <button class="navbar-toggler" type="button"
+    MOBILE MENU BUTTON -->
+    <!-- <button class="navbar-toggler" type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
+    </button> -->
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+
+    <!-- LOGO -->
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="./WhatsApp Image 2026-06-18 at 11.34.10 PM.jpeg"
+           width="45"
+           height="45"
+           class="me-2 rounded-circle">
+
+      <span class="fw-bold text-warning">
+        Charan Tours
+      </span>
+    </a>
+
+    <!-- MOBILE MENU -->
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
+
+      <span class="navbar-toggler-icon"></span>
+
     </button>
+
+    <div class="collapse navbar-collapse"
+         id="navbarNav">
+
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link active"
+             href="#">
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"
+             href="#booking">
+            Book Trip
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"
+             href="#populardestinations">
+            Destinations
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"
+             href="#contact">
+            Contact
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <span
+            id="userEmail"
+            class="nav-link text-warning">
+          </span>
+        </li>
+
+        <li class="nav-item">
+
+          <button
+            class="btn btn-danger btn-sm mt-1"
+            onclick="logout()">
+
+            Logout
+
+          </button>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+</nav>
 
     <!-- NAVIGATION BUTTONS -->
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -71,7 +162,7 @@
 </section>
 
 <!-- DESTINATIONS PREVIEW -->
-<section class="container my-5">
+<section id="populardestinations" class="container my-5">
   <h1 class="text-center mb-4">Popular Destinations</h1>
   <h3 class="text-center mb-4">HILL STATIONS</h3>
 <h6 class="text-center mb-4">Hill stations are towns or regions located at higher elevations, usually in mountainous areas. They are known for their cool climate, scenic beauty, forests, waterfalls, and peaceful environment. Hill stations are popular tourist destinations for relaxation, adventure activities, and escaping the heat of the plains.</h6>
@@ -140,7 +231,7 @@
       </div>
     </div>
 </div>
-  </div> 
+  </div>
   <h3 class="text-center mb-4">Nature and Adventure</h3>
 <h6 class="text-center mb-4">Nature and adventure tourism involves exploring natural landscapes and participating in exciting outdoor activities. It offers travelers an opportunity to experience mountains, rivers, forests, valleys, and wildlife while enjoying thrilling activities such as trekking, rafting, camping, and skiing.</h6>
 
@@ -171,7 +262,7 @@
         <img src="./images (6).jpg" class="card-img-top">
         <div class="card-body">
           <h5>SPITI VALLEY</h5>
-          <p> Renowned for its rugged mountains, ancient monasteries, and challenging trekking routes.</p>
+          <p> Known as the "Middle Land" because it lies between India and Tibet, Spiti is famous for its rugged landscapes, and peaceful villages</p>
         </div>
       </div>
     </div>
@@ -301,10 +392,169 @@
   </div>
 </section>
 <!-- login section -->
+ <!-- LOGIN POPUP -->
+<div id="loginModal"
+style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+">
+
+<div style="
+background:white;
+padding:25px;
+border-radius:15px;
+width:350px;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+">
+
+<h3 class="text-center text-warning mb-3">
+🌍 Charan Tours & Travels
+</h3>
+
+<p class="text-center text-muted">
+Login to continue your booking
+</p>
+
+<input
+id="username"
+class="form-control mb-3"
+placeholder="Enter Username">
+
+<input
+id="loginPhone"
+class="form-control mb-3"
+placeholder="Enter Phone Number">
+
+<button
+class="btn btn-success w-100"
+onclick="loginUser()">
+Login
+</button>
+
+</div>
+
+</div>
+<script type="module">
+
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+window.loginUser = async function () {
+
+  const username = document.getElementById("username").value.trim();
+  const phone = document.getElementById("loginPhone").value.trim();
+
+  if (!username || !phone) {
+    alert("Please enter all details");
+    return;
+  }
+
+  if (!/^[0-9]{10}$/.test(phone)) {
+    alert("Enter a valid 10-digit phone number");
+    return;
+  }
+
+  try {
+
+    await addDoc(collection(db, "users"), {
+      username,
+      phone,
+      loginTime: new Date()
+    });
+
+    localStorage.setItem("loggedIn", "true");
+    localStorage.setItem("username", username);
+
+    document.getElementById("loginModal").style.display = "none";
+
+    alert("Login Successful ✅");
+
+  } catch (err) {
+    console.error(err);
+    alert("Login Failed ❌");
+  }
+};
+
+/* Hide popup if already logged in */
+// window.onload = function () {
+
+//   if (localStorage.getItem("loggedIn") === "true") {
+//     document.getElementById("loginModal").style.display = "none";
+//   }
+
+// };
+window.onload = function () {
+
+  document.getElementById("loginModal").style.display = "flex";
+
+};
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="script.js" type="module"></script>
+<script src="c.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- contact section -->
+
+<!-- CONTACT -->
+<section id="contact" class="container my-5">
+
+  <h2 class="text-center mb-4">Contact Us</h2>
+
+  <div class="card p-4">
+
+    <h5>📞 Phone</h5>
+    <p>8296819678</p>
+
+    <h5>📧 Email</h5>
+    <p>charantours15@gmail.com</p>
+
+    <h5>📍 Address</h5>
+    <p>Bengluru, Karnataka</p>
+
+    <h5>💬 WhatsApp</h5>
+    <a
+      class="btn btn-success"
+      href="https://wa.me/8296819678"
+      target="_blank">
+      Chat on WhatsApp
+    </a>
+
+  </div>
+
+</section>
+<!-- <script type="module">
+
+import { auth } from "./firebase.js";
+
+import {
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+
+    }
+
+});
+
+</script> -->
 </body>
 </html>
